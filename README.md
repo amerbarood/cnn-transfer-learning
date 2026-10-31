@@ -30,20 +30,32 @@ Training convolutional networks from scratch on CIFAR-10, then reusing pretraine
 - **Fine-tuning beats feature extraction** here, because CIFAR-10's tiny 32×32 images differ enough from ImageNet that the deeper layers need to adapt.
 - **Domain shift is brutal.** A digit model with 98% accuracy on clean MNIST drops to 15% on real-world house-number photos (SVHN), showing why transfer only works between related domains.
 
-## Notebooks
+## Running the code (VS Code / Python)
 
-| Notebook | Contents |
-|---|---|
-| [`0.1_cifar10_cnn_leakyrelu.ipynb`](notebooks/0.1_cifar10_cnn_leakyrelu.ipynb) | CNN on CIFAR-10 with LeakyReLU, SGD vs Adam |
-| [`0.1_cifar10_cnn_tanh.ipynb`](notebooks/0.1_cifar10_cnn_tanh.ipynb) | Same network with Tanh |
-| [`0.2_transfer_learning.ipynb`](notebooks/0.2_transfer_learning.ipynb) | AlexNet fine-tuning and feature extraction; MNIST → SVHN transfer |
-
-All datasets (CIFAR-10, MNIST, SVHN) download automatically through `torchvision`.
+The experiments are a Python package with a command-line entry point. All datasets (CIFAR-10, MNIST, SVHN) download automatically through `torchvision` into `data/raw/`; loss curves and sample images are saved to `outputs/`.
 
 ```bash
-pip install torch torchvision matplotlib scikit-learn jupyter
-jupyter notebook notebooks/
+python -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+
+python main.py cifar-cnn --activation leakyrelu   # 0.1, SGD vs Adam
+python main.py cifar-cnn --activation tanh
+python main.py transfer-imagenet                  # 0.2.1, AlexNet fine-tuning vs feature extraction
+python main.py transfer-mnist-svhn                # 0.2.2, MNIST model applied to SVHN
+python main.py all                                # everything
+python main.py cifar-cnn --help                   # epochs, learning rate, batch size, ...
 ```
+
+In VS Code, open the folder, pick the `.venv` interpreter, and use the **Run and Debug** panel: `.vscode/launch.json` has a launch configuration for each experiment. `pytest` runs fast smoke tests on random data (no downloads).
+
+| Path | Contents |
+|---|---|
+| [`main.py`](main.py) | Command-line entry point |
+| [`cnn_transfer/data.py`](cnn_transfer/data.py) | CIFAR-10, MNIST and SVHN loaders with an 80/20 train/validation split |
+| [`cnn_transfer/models.py`](cnn_transfer/models.py) | Small CNN (LeakyReLU/Tanh/ReLU) and pretrained AlexNet with a new head |
+| [`cnn_transfer/training.py`](cnn_transfer/training.py) | Training loop keeping the best-validation model, accuracy, loss plots |
+| [`cnn_transfer/experiments.py`](cnn_transfer/experiments.py) | The three experiments, with the original hyperparameters as defaults |
 
 ## Team
 
