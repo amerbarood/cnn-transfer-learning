@@ -55,17 +55,7 @@ In VS Code, open the folder, pick the `.venv` interpreter, and use the **Run and
 | [`cnn_transfer/data.py`](cnn_transfer/data.py) | CIFAR-10, MNIST and SVHN loaders with an 80/20 train/validation split |
 | [`cnn_transfer/models.py`](cnn_transfer/models.py) | Small CNN (LeakyReLU/Tanh/ReLU) and pretrained AlexNet with a new head |
 | [`cnn_transfer/training.py`](cnn_transfer/training.py) | Training loop keeping the best-validation model, accuracy, loss plots |
-| [`cnn_transfer/experiments.py`](cnn_transfer/experiments.py) | The three experiments, with the notebooks' hyperparameters as defaults |
-
-## Original notebooks
-
-The original notebooks, with their saved outputs, are kept in [`notebooks/`](notebooks/):
-
-| Notebook | Contents |
-|---|---|
-| [`0.1_cifar10_cnn_leakyrelu.ipynb`](notebooks/0.1_cifar10_cnn_leakyrelu.ipynb) | CNN on CIFAR-10 with LeakyReLU, SGD vs Adam |
-| [`0.1_cifar10_cnn_tanh.ipynb`](notebooks/0.1_cifar10_cnn_tanh.ipynb) | Same network with Tanh |
-| [`0.2_transfer_learning.ipynb`](notebooks/0.2_transfer_learning.ipynb) | AlexNet fine-tuning and feature extraction; MNIST → SVHN transfer |
+| [`cnn_transfer/experiments.py`](cnn_transfer/experiments.py) | The three experiments, with the original hyperparameters as defaults |
 
 ## Team
 
